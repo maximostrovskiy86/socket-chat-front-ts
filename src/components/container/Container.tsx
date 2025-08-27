@@ -7,7 +7,7 @@ interface Props {
 }
 
 function Container({children}: Props) {
-    return <div className={`${style.Container}`}>
+    return <div className={`${style.container}`}>
         {children}
     </div>;
 }
