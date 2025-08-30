@@ -1,4 +1,3 @@
-import style from './App.module.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from "../container/Container.tsx";
 import LoginPage from "../../pages/loginPage/LoginPage.tsx";
