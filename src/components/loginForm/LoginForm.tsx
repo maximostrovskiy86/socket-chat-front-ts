@@ -1,15 +1,18 @@
-import React, { FormEvent, useState, ChangeEvent } from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Button } from "react-bootstrap";
+import authOperations from "../../redux/auth/auth-operations.tsx"
 import style from "./LoginForm.module.scss";
 
 
 function LoginForm() {
-  const [username, setUserName] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUserName] = useState("Max");
+  const [password, setPassword] = useState("2wsx@WSX");
+  const dispatch = useDispatch();
 
-  const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e) => {
     // const { name, value, id } = target as Test;
-    const { name, value } = target;
+    const { name, value } = e.target;
     switch (name) {
       case "username":
         return setUserName(value);
@@ -24,9 +27,9 @@ function LoginForm() {
     setPassword("");
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // dispatch(authOperations.authLogin({ username, password }));
+    dispatch(authOperations.authLogin({ username, password }));
     resetForm();
   };
 
@@ -40,9 +43,9 @@ function LoginForm() {
           value={username}
           onChange={handleChange}
           // pattern="[a-zA-Z]"
-          // title="Имя может состоять из цифр, букв латинского алфавита и спецсимволов @ $ &"
+          // title="The name can consist of numbers, Latin letters and special characters @ $ &"
           required
-          placeholder="Логин *"
+          placeholder="Login *"
           className={style.field}
         />
       </label>
@@ -55,7 +58,7 @@ function LoginForm() {
           value={password}
           onChange={handleChange}
           pattern="[0-9a-zA-Z!@#$%^&*]{6,}"
-          // title="Пароль должен состоять минимум из 7 символов, может состоять из цифр, букв латинского алфавита и спецсимволов ! @ # $ % ^ & *"
+          // title="The password must be at least 7 characters long and may contain numbers, Latin letters and special characters ! @ # $ % ^ & *"
           required
           placeholder="Пароль *"
           className={style.field}

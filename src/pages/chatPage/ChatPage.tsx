@@ -15,7 +15,7 @@ function ChatPage() {
     useEffect(() => {
         setSocket(
             io("http://localhost:4000", {
-                reconnectionDelayMax: 10000,
+                // reconnectionDelayMax: 10000,
                 // auth: {
                 //     token,
                 // },
@@ -30,7 +30,7 @@ function ChatPage() {
     }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {value, name} = e.target;
+        const {value } = e.target;
         setMsg(value);
     }
 

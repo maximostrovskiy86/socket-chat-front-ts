@@ -1,4 +1,4 @@
-@import "./variables";
+@use "./variables" as v;
 //@mixin color-transitions($color) {
 //    color: $color;
 //    transition: color 250ms $timing-function;
