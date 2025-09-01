@@ -30,7 +30,8 @@ const user = createReducer(initialState, (builder) => {
             ...state,
             isLogIn: true,
             isLoading: false,
-            ...action.payload,
+            ...action.payload.userData,
+            token: action.payload.token,
         }))
         .addCase(loginAuthError, (_, action) => ({
             isLoading: false,
@@ -38,8 +39,18 @@ const user = createReducer(initialState, (builder) => {
         }))
 
         // logOut
+        .addCase(logOutAuthRequest, (_, action) => ({
+            isLoading: true,
+            ...action.payload,
+        }))
+
         .addCase(logOutAuthSuccess, () => ({
             ...initialState
+        }))
+
+        .addCase(logOutAuthError, (_, action) => ({
+            isLoading: false,
+            ...action.payload,
         }))
 })
 

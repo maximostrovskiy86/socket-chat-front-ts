@@ -16,6 +16,13 @@ function ChatPage() {
     const [msg, setMsg] = useState("");
     const [socket, setSocket] = useState<Socket | null | undefined>();
 
+    function getUserNameFromStorage() {
+        const saveSettings: string | null = localStorage.getItem("persist:auth");
+        const getUser =  JSON.parse(saveSettings)
+        console.log("getUser",JSON.parse(getUser.user))
+        return saveSettings ? JSON.parse(getUser.user)?.username : "";
+    }
+
     useEffect(() => {
         setSocket(
             io("http://localhost:4000", {
@@ -59,7 +66,7 @@ function ChatPage() {
     return (
         <div className={style.chat}>
             <h3 style={{textAlign: "center"}}>
-                Welcome
+                Welcome {getUserNameFromStorage()}
             </h3>
             <Row className={style.rowBox}>
                 <Col sm={8}>

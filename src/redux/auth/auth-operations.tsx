@@ -4,6 +4,9 @@ import {
     loginAuthRequest,
     loginAuthSuccess,
     loginAuthError,
+    logOutAuthRequest,
+    logOutAuthSuccess,
+    logOutAuthError
 } from "./auth-actions.js";
 
 const BASE_URL = "http://localhost:4000";
@@ -33,12 +36,12 @@ const authLogin = (user) => async (dispatch) => {
 };
 
 const authLogout = () => async (dispatch) => {
-    dispatch(loginAuthRequest());
+    dispatch(logOutAuthRequest());
 
     try {
-        dispatch(loginAuthSuccess());
+        dispatch(logOutAuthSuccess());
     } catch (error) {
-        dispatch(loginAuthError(error));
+        dispatch(logOutAuthError(error));
     }
 }
 
