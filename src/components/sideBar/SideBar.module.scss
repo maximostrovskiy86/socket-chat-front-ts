@@ -1,5 +1,7 @@
 @use "../../styles/utils/mixin" as mix;
 @use "../../styles/utils/variables" as var;
+@use 'sass:color';
+
 
 .sideBar {
     display: flex;
