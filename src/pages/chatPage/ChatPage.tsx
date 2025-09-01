@@ -1,13 +1,17 @@
 import style from "./ChatPage.module.scss";
 import {Row, Col} from "react-bootstrap";
+import { useAppSelector, useAppDispatch } from "../../hooks/Hooks";
 import Section from "../../components/section/Section.tsx";
 import ChatForm from "../../components/chatForm/chatForm.tsx";
 import Sidebar from "../../components/sideBar/SideBar.tsx";
 import React, {useEffect, useState} from "react";
 import {io, Socket} from "socket.io-client";
+import authSelectors from "../../redux/auth/auth-selectors.tsx";
 
 
 function ChatPage() {
+    // const dispatch = useAppDispatch();
+    const token = useAppSelector(authSelectors.isAuth);
 
     const [msg, setMsg] = useState("");
     const [socket, setSocket] = useState<Socket | null | undefined>();
@@ -15,10 +19,10 @@ function ChatPage() {
     useEffect(() => {
         setSocket(
             io("http://localhost:4000", {
-                // reconnectionDelayMax: 10000,
-                // auth: {
-                //     token,
-                // },
+                reconnectionDelayMax: 10000,
+                auth: {
+                    token,
+                },
             })
         );
 

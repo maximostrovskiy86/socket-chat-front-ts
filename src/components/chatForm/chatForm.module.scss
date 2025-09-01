@@ -47,7 +47,6 @@
 }
 
 .message:nth-child(odd) {
-    //background-color: lighten(v.$main-color, 90%);
     background-color: color.scale(v.$main-color, $lightness: 90%)
 }
 

@@ -1,4 +1,3 @@
-import React from "react";
 import {Form, Button} from 'react-bootstrap';
 import style from "./chatForm.module.scss";
 
