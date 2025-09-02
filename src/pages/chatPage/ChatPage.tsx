@@ -15,11 +15,12 @@ function ChatPage() {
 
     const [msg, setMsg] = useState("");
     const [socket, setSocket] = useState<Socket | null | undefined>();
+    const [messages, setMessages] = useState([]);
 
+    // console.log("SOCKET", socket)
     function getUserNameFromStorage() {
         const saveSettings: string | null = localStorage.getItem("persist:auth");
         const getUser =  JSON.parse(saveSettings)
-        console.log("getUser",JSON.parse(getUser.user))
         return saveSettings ? JSON.parse(getUser.user)?.username : "";
     }
 
@@ -39,6 +40,23 @@ function ChatPage() {
         //     setSocket(null);
         // };
     }, []);
+
+    useEffect(() => {
+        if (token && socket) {
+            socket.on("CHAT_UPDATE", ({ message }) => {
+                setMessages((prev) => [...prev, message]);
+            });
+
+
+        }
+
+        return () => {
+            socket?.off("CHAT_UPDATE");
+            socket?.off("GET_ONLINE_USERS");
+            socket?.off("GET_ALL_USERS");
+        };
+    }, [socket, token]);
+
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {value } = e.target;

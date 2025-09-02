@@ -54,27 +54,11 @@ const user = createReducer(initialState, (builder) => {
         }))
 })
 
-// .addCase(updateUserSuccess, (state, action) => {
-//     ({
-//         ...action.payload
-//     })
-// }
-// [loginAuthSuccess]: (_, { payload }) => ({
-//   isLogIn: true,
-//   ...payload.user,
-// }),
-// [logOutAuthSuccess]: () => initialState,
 // [updateUserSuccess]: (_, { payload }) => ({ ...payload }),
-// });
 
-// const token = createReducer(initialState, {
-//   [loginAuthSuccess]: (_, { payload }) => payload.token,
-//   [logOutAuthSuccess]: () => null,
-// });
 
 const authReducers = combineReducers({
     user,
-    // token,
 });
 
 export default authReducers;
