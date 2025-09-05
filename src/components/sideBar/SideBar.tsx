@@ -17,6 +17,15 @@ const SideBar = ({allUsers, usersOnline, socket}) => {
         dispatch(authOperations.authLogout());
     };
 
+    const onBannedUser = (id: string, isBanned: boolean) => {
+        console.log("ID", id, "isBanned", isBanned);
+        socket.emit("BAN_USER", { id, isBanned });
+    };
+
+    const onMutedUser = (id: string, isMuted: boolean) => {
+        socket.emit("ON_MUTE", { id, isMuted });
+    };
+
     return (
         <div className={style.sideBar}>
             <Button className={style.logOut} variant="warning" onClick={logOut}>
@@ -33,8 +42,8 @@ const SideBar = ({allUsers, usersOnline, socket}) => {
                                 isBanned={user.isBanned}
                                 isOnline={user.isOnline}
                                 isMuted={user.isMuted}
-                                // onBannedUser={onBannedUser}
-                                // onMutedUser={onMutedUser}
+                                onBannedUser={onBannedUser}
+                                onMutedUser={onMutedUser}
                             />
                         ))}
                 </ul>

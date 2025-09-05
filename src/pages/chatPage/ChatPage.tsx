@@ -8,6 +8,7 @@ import React, {useEffect, useState} from "react";
 import {io, Socket} from "socket.io-client";
 import authSelectors from "../../redux/auth/auth-selectors.tsx";
 import authOperations from "../../redux/auth/auth-operations.tsx";
+import {updateUserSuccess} from "../../redux/auth/auth-actions.tsx";
 
 
 function ChatPage() {
@@ -22,21 +23,16 @@ function ChatPage() {
     const [allUsers, setAllUsers] = useState([]);
     const [usersOnline, setUsersOnline] = useState([]);
 
-    // console.log("SOCKET", socket)
     function getUserNameFromStorage() {
         const saveSettings: string | null = localStorage.getItem("persist:auth");
         const getUser = JSON.parse(saveSettings)
         return saveSettings ? JSON.parse(getUser.user)?.username : "";
     }
 
-    // useEffect(() => {
-    //     console.log("Mouting phase: same when componentDidMount runs");
-    // }, []);
-
     useEffect(() => {
         setSocket(
             io("http://localhost:4000", {
-                reconnectionDelayMax: 10000,
+                // reconnectionDelayMax: 10000,
                 auth: {
                     token,
                 },
@@ -44,16 +40,17 @@ function ChatPage() {
         );
 
         return () => {
+            console.log("DISCONECT-1")
             socket?.disconnect();
             setSocket(null);
         };
-    }, [token]);
+    }, []);
 
     useEffect(() => {
         if (token && socket) {
-            socket.on("GET_ALL_MESSAGE", (allMessages) => {
+            socket.on("GET_ALL_MESSAGES", (allMessages) => {
                 // console.log("allMessage", allMessages);
-                setMessages((prev) => [...prev, ...allMessages]);
+                setMessages(allMessages);
 
             })
 
@@ -72,10 +69,15 @@ function ChatPage() {
                 setUsersOnline(usersOnline)
             })
 
-            // socket.on("disconnect", () => {
-            //     console.log("user disconnected");
-            //     dispatch(authOperations.authLogout());
-            // });
+            socket.on("USER_UPDATE", (user) => {
+                console.log("USER_UPDATE,", user);
+                // dispatch(updateUserSuccess(user));
+            });
+
+            socket.on("disconnect", () => {
+                console.log("user disconnected");
+                dispatch(authOperations.authLogout());
+            });
 
         }
 
@@ -83,8 +85,9 @@ function ChatPage() {
             socket?.off("CHAT_UPDATE");
             socket?.off("GET_ONLINE_USERS");
             socket?.off("GET_ALL_USERS");
+            socket?.off("GET_ALL_MESSAGES");
         };
-    }, [dispatch, socket, token]);
+    }, [socket]);
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,13 +99,10 @@ function ChatPage() {
         e.preventDefault();
 
         if (msg) {
-            const trimmed = msg.trim();
-            if (trimmed && socket) {
-                socket.emit("CHAT_MESSAGE", {
-                    message: trimmed,
-                    username: userName
-                });
-            }
+            socket?.emit("CHAT_MESSAGE", {
+                message: msg.trim(),
+                username: userName
+            });
         }
 
         setMsg("");

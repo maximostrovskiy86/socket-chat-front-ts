@@ -5,12 +5,11 @@ import moment from "moment";
 
 
 const chatForm = ({onSubmit, onChange, msg, messages}) => {
-    const scrollRef = useRef(null);
 
+    const scrollRef = useRef(null);
     useEffect(() => {
-        console.log("scrollRef", scrollRef)
         scrollRef?.current.scrollIntoView({ behavior: "smooth" });
-    })
+    }, [messages])
 
     return (
         <div className={style.main}>
