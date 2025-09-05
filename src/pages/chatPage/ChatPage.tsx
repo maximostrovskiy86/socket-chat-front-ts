@@ -1,28 +1,37 @@
 import style from "./ChatPage.module.scss";
 import {Row, Col} from "react-bootstrap";
-import { useAppSelector, useAppDispatch } from "../../hooks/Hooks";
+import {useAppSelector, useAppDispatch} from "../../hooks/Hooks";
 import Section from "../../components/section/Section.tsx";
 import ChatForm from "../../components/chatForm/chatForm.tsx";
 import Sidebar from "../../components/sideBar/SideBar.tsx";
 import React, {useEffect, useState} from "react";
 import {io, Socket} from "socket.io-client";
 import authSelectors from "../../redux/auth/auth-selectors.tsx";
+import authOperations from "../../redux/auth/auth-operations.tsx";
 
 
 function ChatPage() {
-    // const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
     const token = useAppSelector(authSelectors.isAuth);
+    const userName = useAppSelector(authSelectors.userName);
+
 
     const [msg, setMsg] = useState("");
     const [socket, setSocket] = useState<Socket | null | undefined>();
     const [messages, setMessages] = useState([]);
+    const [allUsers, setAllUsers] = useState([]);
+    const [usersOnline, setUsersOnline] = useState([]);
 
     // console.log("SOCKET", socket)
     function getUserNameFromStorage() {
         const saveSettings: string | null = localStorage.getItem("persist:auth");
-        const getUser =  JSON.parse(saveSettings)
+        const getUser = JSON.parse(saveSettings)
         return saveSettings ? JSON.parse(getUser.user)?.username : "";
     }
+
+    // useEffect(() => {
+    //     console.log("Mouting phase: same when componentDidMount runs");
+    // }, []);
 
     useEffect(() => {
         setSocket(
@@ -34,19 +43,39 @@ function ChatPage() {
             })
         );
 
-        // return () => {
-        //     // io.disconnect();
-        //     socket?.disconnect();
-        //     setSocket(null);
-        // };
-    }, []);
+        return () => {
+            socket?.disconnect();
+            setSocket(null);
+        };
+    }, [token]);
 
     useEffect(() => {
         if (token && socket) {
-            socket.on("CHAT_UPDATE", ({ message }) => {
+            socket.on("GET_ALL_MESSAGE", (allMessages) => {
+                // console.log("allMessage", allMessages);
+                setMessages((prev) => [...prev, ...allMessages]);
+
+            })
+
+            socket.on("CHAT_UPDATE", ({message}) => {
+                // console.log("CHAT_MESSAGE", message);
                 setMessages((prev) => [...prev, message]);
             });
 
+            socket.on("GET_ALL_USERS", (allUsers) => {
+                // console.log("GET_ALL_USERS", allUsers);
+                setAllUsers(allUsers);
+            });
+
+            socket.on("GET_ONLINE_USERS", (usersOnline) => {
+                // console.log("GET_ONLINE_USER", usersOnline)
+                setUsersOnline(usersOnline)
+            })
+
+            // socket.on("disconnect", () => {
+            //     console.log("user disconnected");
+            //     dispatch(authOperations.authLogout());
+            // });
 
         }
 
@@ -55,11 +84,11 @@ function ChatPage() {
             socket?.off("GET_ONLINE_USERS");
             socket?.off("GET_ALL_USERS");
         };
-    }, [socket, token]);
+    }, [dispatch, socket, token]);
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {value } = e.target;
+        const {value} = e.target;
         setMsg(value);
     }
 
@@ -69,12 +98,14 @@ function ChatPage() {
         if (msg) {
             const trimmed = msg.trim();
             if (trimmed && socket) {
-                socket.emit("CHAT_MESSAGE", {message: trimmed});
-                setMsg("");
+                socket.emit("CHAT_MESSAGE", {
+                    message: trimmed,
+                    username: userName
+                });
             }
-
-            setMsg("");
         }
+
+        setMsg("");
     }
 
     // if (!socket) {
@@ -93,12 +124,17 @@ function ChatPage() {
                             onChange={handleChange}
                             onSubmit={handleSubmit}
                             msg={msg}
+                            messages={messages}
                         />
                     </Section>
                 </Col>
                 <Col sm={4}>
                     <Section title="">
-                        <Sidebar/>
+                        <Sidebar
+                            allUsers={allUsers}
+                            socket={socket}
+                            usersOnline={usersOnline}
+                        />
                     </Section>
                 </Col>
             </Row>

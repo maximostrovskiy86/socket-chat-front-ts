@@ -22,7 +22,6 @@ const tok = {
 };
 
 const authLogin = (user) => async (dispatch) => {
-    console.log("user", user);
 
     dispatch(loginAuthRequest());
     try {
