@@ -6,9 +6,10 @@ import {
     loginAuthSuccess,
     logOutAuthRequest,
     logOutAuthSuccess,
-    logOutAuthError
-    // updateUserSuccess,
-} from "./auth-actions.js";
+    logOutAuthError,
+    updateUserSuccess,
+} from "./auth-actions.tsx";
+import state from "../store.tsx";
 
 const initialState = {
     isLogIn: false,
@@ -52,6 +53,16 @@ const user = createReducer(initialState, (builder) => {
             isLoading: false,
             ...action.payload,
         }))
+
+        // update user
+        .addCase(updateUserSuccess, (_, action) => {
+            console.log("action", action)
+
+            return {
+                ...state,
+                ...action.payload,
+            }
+        })
 })
 
 // [updateUserSuccess]: (_, { payload }) => ({ ...payload }),

@@ -7,7 +7,7 @@ import {
     logOutAuthRequest,
     logOutAuthSuccess,
     logOutAuthError
-} from "./auth-actions.js";
+} from "./auth-actions.tsx";
 
 const BASE_URL = "http://localhost:4000";
 
@@ -22,13 +22,10 @@ const tok = {
 };
 
 const authLogin = (user) => async (dispatch) => {
-    console.log("user", user);
-
     dispatch(loginAuthRequest());
     try {
-        console.log("user", user);
         const {data} = await axios.post(`${BASE_URL}/auth/login`, user);
-        // tok.set(data.token);
+        tok.set(data.token);
         dispatch(loginAuthSuccess(data));
     } catch (error) {
         dispatch(loginAuthError(error));
@@ -40,6 +37,7 @@ const authLogout = () => async (dispatch) => {
 
     try {
         dispatch(logOutAuthSuccess());
+        tok.unset();
     } catch (error) {
         dispatch(logOutAuthError(error));
     }
