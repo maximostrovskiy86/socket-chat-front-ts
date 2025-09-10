@@ -6,7 +6,9 @@ import moment from "moment";
 
 const chatForm = ({onSubmit, onChange, msg, messages}) => {
 
-    const scrollRef = useRef(null);
+    const scrollRef = useRef<HTMLLIElement>(null);
+
+    console.log('HTMLInputElement', scrollRef.current)
     useEffect(() => {
         scrollRef?.current.scrollIntoView({ behavior: "smooth" });
     }, [messages])
@@ -34,8 +36,6 @@ const chatForm = ({onSubmit, onChange, msg, messages}) => {
                         placeholder="Type message..."
                         value={msg}
                         onChange={onChange}
-
-
                         // pattern="[0-9a-zA-Z!@#$%^&*~'`]{1,200}"
                     />
                 </Form.Group>
