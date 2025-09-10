@@ -1,4 +1,4 @@
-@import './base/modern-normalize';
-@import './base/reset';
-@import './utils/variables';
-@import "./utils/mixin";
+@forward './base/modern-normalize';
+@forward './base/reset';
+@forward './utils/variables';
+@forward "./utils/mixin";
