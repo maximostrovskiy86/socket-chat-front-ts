@@ -17,7 +17,7 @@ function ChatPage() {
     const userName = useAppSelector(authSelectors.userName);
 
 
-    const [msg, setMsg] = useState("");
+    const [msg, setMsg] = useState<string>("");
     const [socket, setSocket] = useState<Socket | null | undefined>();
     const [messages, setMessages] = useState([]);
     const [allUsers, setAllUsers] = useState([]);

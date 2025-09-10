@@ -1,4 +1,4 @@
-import {useState} from "react";
+import React, {useState, FormEvent } from "react";
 import {useDispatch} from "react-redux";
 import {Button} from "react-bootstrap";
 import authOperations from "../../redux/auth/auth-operations.tsx"
@@ -6,11 +6,11 @@ import style from "./LoginForm.module.scss";
 
 
 function LoginForm() {
-    const [username, setUserName] = useState("Max");
-    const [password, setPassword] = useState("2wsx@WSX");
+    const [username, setUserName] = useState<string>("Max");
+    const [password, setPassword] = useState<string>("2wsx@WSX");
     const dispatch = useDispatch();
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         // const { name, value, id } = target as Test;
         const {name, value} = e.target;
         switch (name) {
@@ -22,13 +22,13 @@ function LoginForm() {
         }
     };
 
-    const resetForm = () => {
+    const resetForm = (): void => {
         setUserName("");
         setPassword("");
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = (event: FormEvent): void => {
+        event.preventDefault();
         dispatch(authOperations.authLogin({username, password}));
         resetForm();
     };
