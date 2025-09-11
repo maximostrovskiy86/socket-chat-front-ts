@@ -1,3 +1,7 @@
+import {Socket} from "socket.io-client";
+
+export type SocketType = Socket | null | undefined;
+
 export type Message = {
     message: string;
     username: string;
@@ -6,7 +10,7 @@ export type Message = {
     _id: string;
 }
 
-export type User = {
+export type UserType = {
     createdAt: string;
     isAdmin: boolean;
     isBanned: boolean;

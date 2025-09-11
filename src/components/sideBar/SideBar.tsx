@@ -1,29 +1,36 @@
 import {Button} from "react-bootstrap";
 import style from "./SideBar.module.scss";
 import LogOut from "../iconSvgComponents/logOutButton/LogOut";
-import {useDispatch, useSelector} from "react-redux";
+import {useAppSelector, useAppDispatch} from "../../hooks/Hooks";
 import authOperations from "../../redux/auth/auth-operations.tsx";
 import authSelectors from "../../redux/auth/auth-selectors.tsx";
-import User from "../user/User.tsx";
 import UserIsAdmin from "../user/UserIsAdmin.tsx";
+import User from "../user/User.tsx";
+import {SocketType, UserType, UserOnline} from "../../pages/chatPage/ChatPage.types.ts"
 
+type Props = {
+    allUsers: UserType[];
+    usersOnline: UserOnline[];
+    socket: SocketType;
+}
 
-const SideBar = ({allUsers, usersOnline, socket}) => {
-    const dispatch = useDispatch();
-    const isAdmin = useSelector(authSelectors.isAdmin);
+const SideBar = ({allUsers, usersOnline, socket}: Props) => {
+    const dispatch = useAppDispatch();
+    const isAdmin = useAppSelector(authSelectors.isAdmin);
 
     const logOut = () => {
-        socket.disconnect();
+        socket?.disconnect();
         dispatch(authOperations.authLogout());
     };
 
     const onBannedUser = (id: string, isBanned: boolean) => {
-        console.log("ID", id, "isBanned", isBanned);
-        socket.emit("BAN_USER", { id, isBanned });
+        if (socket) {
+            socket.emit("BAN_USER", {id, isBanned});
+        }
     };
 
     const onMutedUser = (id: string, isMuted: boolean) => {
-        socket.emit("ON_MUTE", { id, isMuted });
+        socket?.emit("ON_MUTE", {id, isMuted});
     };
 
     return (
@@ -53,7 +60,6 @@ const SideBar = ({allUsers, usersOnline, socket}) => {
                     <User key={user.id} username={user.username}/>
                 ))
             )}
-
         </div>
     );
 }

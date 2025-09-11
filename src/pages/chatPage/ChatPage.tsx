@@ -5,10 +5,10 @@ import Section from "../../components/section/Section.tsx";
 import ChatForm from "../../components/chatForm/ChatForm.tsx";
 import Sidebar from "../../components/sideBar/SideBar.tsx";
 import React, {useEffect, useState} from "react";
-import {io, Socket} from "socket.io-client";
+import {io} from "socket.io-client";
 import authSelectors from "../../redux/auth/auth-selectors.tsx";
 import authOperations from "../../redux/auth/auth-operations.tsx";
-import { Message, User, UserOnline } from "./ChatPage.types.ts";
+import { Message, UserType, UserOnline, SocketType } from "./ChatPage.types.ts";
 
 
 function ChatPage() {
@@ -17,9 +17,9 @@ function ChatPage() {
     const userName = useAppSelector(authSelectors.userName);
 
     const [msg, setMsg] = useState<string>("");
-    const [socket, setSocket] = useState<Socket | null | undefined>();
+    const [socket, setSocket] = useState<SocketType>();
     const [messages, setMessages] = useState<Message[]>([]);
-    const [allUsers, setAllUsers] = useState<User[]>([]);
+    const [allUsers, setAllUsers] = useState<UserType[]>([]);
     const [usersOnline, setUsersOnline] = useState<UserOnline[]>([]);
     const [isMuted, setIsMuted] = useState<boolean>(false);
 
