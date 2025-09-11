@@ -9,6 +9,7 @@ import {io, Socket} from "socket.io-client";
 import authSelectors from "../../redux/auth/auth-selectors.tsx";
 import authOperations from "../../redux/auth/auth-operations.tsx";
 import {updateUserSuccess} from "../../redux/auth/auth-actions.tsx";
+import { Message, User, UserOnline } from "./ChatPage.types.ts";
 
 
 function ChatPage() {
@@ -16,23 +17,17 @@ function ChatPage() {
     const token = useAppSelector(authSelectors.isAuth);
     const userName = useAppSelector(authSelectors.userName);
 
-
     const [msg, setMsg] = useState<string>("");
     const [socket, setSocket] = useState<Socket | null | undefined>();
-    const [messages, setMessages] = useState([]);
-    const [allUsers, setAllUsers] = useState([]);
-    const [usersOnline, setUsersOnline] = useState([]);
+    const [messages, setMessages] = useState<Message[]>([]);
+    const [allUsers, setAllUsers] = useState<User[]>([]);
+    const [usersOnline, setUsersOnline] = useState<UserOnline[]>([]);
 
-    function getUserNameFromStorage() {
-        const saveSettings: string | null = localStorage.getItem("persist:auth");
-        const getUser = JSON.parse(saveSettings)
-        return saveSettings ? JSON.parse(getUser.user)?.username : "";
-    }
 
     useEffect(() => {
         setSocket(
             io("http://localhost:4000", {
-                // reconnectionDelayMax: 10000,
+                reconnectionDelayMax: 10000,
                 auth: {
                     token,
                 },
@@ -40,7 +35,7 @@ function ChatPage() {
         );
 
         return () => {
-            console.log("DISCONECT-1")
+            // console.log("DISCONECT-1")
             socket?.disconnect();
             setSocket(null);
         };
@@ -49,23 +44,18 @@ function ChatPage() {
     useEffect(() => {
         if (token && socket) {
             socket.on("GET_ALL_MESSAGES", (allMessages) => {
-                // console.log("allMessage", allMessages);
                 setMessages(allMessages);
-
             })
 
             socket.on("CHAT_UPDATE", ({message}) => {
-                // console.log("CHAT_MESSAGE", message);
                 setMessages((prev) => [...prev, message]);
             });
 
             socket.on("GET_ALL_USERS", (allUsers) => {
-                // console.log("GET_ALL_USERS", allUsers);
                 setAllUsers(allUsers);
             });
 
             socket.on("GET_ONLINE_USERS", (usersOnline) => {
-                // console.log("GET_ONLINE_USER", usersOnline)
                 setUsersOnline(usersOnline)
             })
 
@@ -95,12 +85,12 @@ function ChatPage() {
         setMsg(value);
     }
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (msg) {
             socket?.emit("CHAT_MESSAGE", {
-                message: msg.trim(),
+                message: msg,
                 username: userName
             });
         }
@@ -108,14 +98,14 @@ function ChatPage() {
         setMsg("");
     }
 
-    // if (!socket) {
-    //   return <></>;
-    // }
+    if (!socket) {
+      return <></>;
+    }
 
     return (
         <div className={style.chat}>
             <h3 style={{textAlign: "center"}}>
-                Welcome {getUserNameFromStorage()}
+                {`Welcome ${userName}`}
             </h3>
             <Row className={style.rowBox}>
                 <Col sm={8}>

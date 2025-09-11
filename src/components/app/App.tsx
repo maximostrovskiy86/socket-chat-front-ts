@@ -11,7 +11,7 @@ function App() {
 
     return (
         <Container className={style.container}>
-            {!isAuth ? <ChatPage/> : <LoginPage/>}
+            {isAuth ? <ChatPage/> : <LoginPage/>}
         </Container>
     )
 }

@@ -3,12 +3,11 @@ import {Form, Button} from 'react-bootstrap';
 import style from "./chatForm.module.scss";
 import moment from "moment";
 
-
 const chatForm = ({onSubmit, onChange, msg, messages}) => {
 
     const scrollRef = useRef<HTMLLIElement>(null);
 
-    console.log('HTMLInputElement', scrollRef.current)
+    // console.log('HTMLInputElement', scrollRef.current)
     useEffect(() => {
         scrollRef?.current.scrollIntoView({ behavior: "smooth" });
     }, [messages])
