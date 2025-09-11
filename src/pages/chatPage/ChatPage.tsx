@@ -2,13 +2,12 @@ import style from "./ChatPage.module.scss";
 import {Row, Col} from "react-bootstrap";
 import {useAppSelector, useAppDispatch} from "../../hooks/Hooks";
 import Section from "../../components/section/Section.tsx";
-import ChatForm from "../../components/chatForm/chatForm.tsx";
+import ChatForm from "../../components/chatForm/ChatForm.tsx";
 import Sidebar from "../../components/sideBar/SideBar.tsx";
 import React, {useEffect, useState} from "react";
 import {io, Socket} from "socket.io-client";
 import authSelectors from "../../redux/auth/auth-selectors.tsx";
 import authOperations from "../../redux/auth/auth-operations.tsx";
-import {updateUserSuccess} from "../../redux/auth/auth-actions.tsx";
 import { Message, User, UserOnline } from "./ChatPage.types.ts";
 
 
@@ -22,6 +21,7 @@ function ChatPage() {
     const [messages, setMessages] = useState<Message[]>([]);
     const [allUsers, setAllUsers] = useState<User[]>([]);
     const [usersOnline, setUsersOnline] = useState<UserOnline[]>([]);
+    const [isMuted, setIsMuted] = useState<boolean>(false);
 
 
     useEffect(() => {
@@ -60,12 +60,11 @@ function ChatPage() {
             })
 
             socket.on("USER_UPDATE", (user) => {
-                console.log("USER_UPDATE,", user);
-                // dispatch(updateUserSuccess(user));
+                setIsMuted(user.isMuted);
             });
 
             socket.on("disconnect", () => {
-                console.log("user disconnected");
+                // console.log("user disconnected");
                 dispatch(authOperations.authLogout());
             });
 
@@ -115,6 +114,7 @@ function ChatPage() {
                             onSubmit={handleSubmit}
                             msg={msg}
                             messages={messages}
+                            isMuted={isMuted}
                         />
                     </Section>
                 </Col>
