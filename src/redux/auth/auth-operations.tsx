@@ -9,10 +9,11 @@ import {
     logOutAuthError
 } from "./auth-actions.tsx";
 
-const BASE_URL = "http://localhost:4000";
+// const BASE_URL = "http://localhost:4000";
+const BASE_URL = "https://socket-chat-back.onrender.com";
 
 const tok = {
-    // eslint-disable-next-line no-shadow
+
     set(token) {
         axios.defaults.headers.common.Authorization = `Bearer ${token}`;
     },
