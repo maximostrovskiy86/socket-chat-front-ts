@@ -60,7 +60,7 @@ const user = createReducer(initialState, (builder) => {
 
             return {
                 ...state,
-                ...action.payload,
+                // ...action.payload,
             }
         })
 })

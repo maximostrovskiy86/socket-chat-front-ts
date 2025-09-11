@@ -1,8 +1,8 @@
 import React from "react";
 import style from "./Section.module.scss";
 
-interface Props {
-  children: React.ComponentProps<any>;
+type Props = {
+  children: React.ReactElement;
   title: string;
 }
 
