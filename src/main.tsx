@@ -5,7 +5,7 @@ import {PersistGate} from "redux-persist/integration/react";
 import store from "./redux/store";
 import "./index.css"
 import './index.css'
-import App from './components/app/App.tsx'
+import App from './components/app/App'
 
 createRoot(document.getElementById('root') as HTMLElement).render(
     <Provider store={store.store}>

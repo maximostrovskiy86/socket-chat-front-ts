@@ -7,7 +7,7 @@ import {
     logOutAuthRequest,
     logOutAuthSuccess,
     logOutAuthError
-} from "./auth-actions.tsx";
+} from "./auth-actions";
 
 // const BASE_URL = "http://localhost:4000";
 const BASE_URL = "https://socket-chat-back.onrender.com";

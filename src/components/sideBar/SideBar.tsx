@@ -2,11 +2,11 @@ import {Button} from "react-bootstrap";
 import style from "./SideBar.module.scss";
 import LogOut from "../iconSvgComponents/logOutButton/LogOut";
 import {useAppSelector, useAppDispatch} from "../../hooks/Hooks";
-import authOperations from "../../redux/auth/auth-operations.tsx";
-import authSelectors from "../../redux/auth/auth-selectors.tsx";
-import UserIsAdmin from "../user/UserIsAdmin.tsx";
-import User from "../user/User.tsx";
-import {SocketType, UserType, UserOnline} from "../../pages/chatPage/ChatPage.types.ts"
+import authOperations from "../../redux/auth/auth-operations";
+import authSelectors from "../../redux/auth/auth-selectors";
+import UserIsAdmin from "../user/UserIsAdmin";
+import User from "../user/User";
+import {SocketType, UserType, UserOnline} from "../../pages/chatPage/ChatPage.types"
 
 type Props = {
     allUsers: UserType[];

@@ -1,9 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import style from "./App.module.scss";
-import Container from "../container/Container.tsx";
-import LoginPage from "../../pages/loginPage/LoginPage.tsx";
-import ChatPage from "../../pages/chatPage/ChatPage.tsx";
-import authSelector from "../../redux/auth/auth-selectors.tsx"
+import Container from "../container/Container";
+import LoginPage from "../../pages/loginPage/LoginPage";
+import ChatPage from "../../pages/chatPage/ChatPage";
+import authSelector from "../../redux/auth/auth-selectors"
 import {useSelector} from "react-redux";
 
 function App() {

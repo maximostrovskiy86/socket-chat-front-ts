@@ -1,14 +1,14 @@
 import style from "./ChatPage.module.scss";
 import {Row, Col} from "react-bootstrap";
 import {useAppSelector, useAppDispatch} from "../../hooks/Hooks";
-import Section from "../../components/section/Section.tsx";
-import ChatForm from "../../components/chatForm/ChatForm.tsx";
-import Sidebar from "../../components/sideBar/SideBar.tsx";
+import Section from "../../components/section/Section";
+import ChatForm from "../../components/chatForm/ChatForm";
+import Sidebar from "../../components/sideBar/SideBar";
 import React, {useEffect, useState} from "react";
 import {io} from "socket.io-client";
-import authSelectors from "../../redux/auth/auth-selectors.tsx";
-import authOperations from "../../redux/auth/auth-operations.tsx";
-import { Message, UserType, UserOnline, SocketType } from "./ChatPage.types.ts";
+import authSelectors from "../../redux/auth/auth-selectors";
+import authOperations from "../../redux/auth/auth-operations";
+import { Message, UserType, UserOnline, SocketType } from "./ChatPage.types";
 
 
 function ChatPage() {
