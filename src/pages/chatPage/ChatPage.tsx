@@ -3,12 +3,12 @@ import {Row, Col} from "react-bootstrap";
 import {useAppSelector, useAppDispatch} from "../../hooks/Hooks";
 import Section from "../../components/section/Section.tsx";
 import ChatForm from "../../components/chatForm/ChatForm.tsx";
-import Sidebar from "../../components/sideBar/SideBar.tsx";
+import Sidebar from "../../components/sideBar/SideBar";
 import React, {useEffect, useState} from "react";
 import {io} from "socket.io-client";
 import authSelectors from "../../redux/auth/auth-selectors.tsx";
 import authOperations from "../../redux/auth/auth-operations.tsx";
-import { Message, UserType, UserOnline, SocketType } from "./ChatPage.types.ts";
+import {Message, UserType, UserOnline, SocketType} from "./ChatPage.types.ts";
 
 
 function ChatPage() {
@@ -23,11 +23,9 @@ function ChatPage() {
     const [usersOnline, setUsersOnline] = useState<UserOnline[]>([]);
     const [isMuted, setIsMuted] = useState<boolean>(false);
 
-
     useEffect(() => {
         setSocket(
             io("https://socket-chat-back.onrender.com", {
-            // io("http://localhost:4000", {
                 reconnectionDelayMax: 10000,
                 auth: {
                     token,
@@ -99,7 +97,7 @@ function ChatPage() {
     }
 
     if (!socket) {
-      return <></>;
+        return <></>;
     }
 
     return (
