@@ -8,7 +8,6 @@ import {
     logOutAuthSuccess,
     logOutAuthError,
 } from "./auth-actions";
-import { Action } from "./Auth.types";
 
 const initialState = {
     isLogIn: false,
@@ -20,40 +19,36 @@ const initialState = {
 
 const user = createReducer(initialState, (builder) => {
     builder
-        // @ts-ignore
-        .addCase(loginAuthRequest, () => ({
+
+        // login
+        .addCase(loginAuthRequest, (_) => ({
             isLoading: true,
         }))
-        .addCase(loginAuthSuccess, (state, action: Action) => {
-            console.log("action", action)
-            console.log("state", state)
-            return {
-                ...state,
-                isLogIn: true,
-                isLoading: false,
-                ...action.payload.userData,
-                token: action.payload.token,
-            }
-        })
-        // @ts-ignore
-        .addCase(loginAuthError, () => ({
+        .addCase(loginAuthSuccess, (state, action) => ({
+            ...state,
+            isLogIn: true,
+            isLoading: false,
+            ...action.payload.userData,
+            token: action.payload.token,
+        }))
+        .addCase(loginAuthError, (_) => ({
             isLoading: false,
         }))
 
-        // @ts-ignore
-        .addCase(logOutAuthRequest, () => ({
+        // logOut
+        .addCase(logOutAuthRequest, (_) => ({
             isLoading: true,
         }))
 
         .addCase(logOutAuthSuccess, () => ({
             ...initialState
         }))
-        // @ts-ignore
-        .addCase(logOutAuthError, () => ({
+
+        .addCase(logOutAuthError, (_) => ({
             isLoading: false,
         }))
+	
 })
-
 
 const authReducers = combineReducers({
     user,
