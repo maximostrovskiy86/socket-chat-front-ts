@@ -8,8 +8,8 @@ import {
     logOutAuthSuccess,
     logOutAuthError,
     updateUserSuccess,
-} from "./auth-actions.tsx";
-import state from "../store.tsx";
+} from "./auth-actions.js";
+import state from "../store.ts";
 
 const initialState = {
     isLogIn: false,
