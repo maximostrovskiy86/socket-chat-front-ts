@@ -5,6 +5,8 @@ import {
     logOutAuthSuccess,
 } from "./auth-actions";
 
+import { Action } from "./Auth.types";
+
 const initialState = {
     isLogIn: false,
     user: null,
@@ -15,13 +17,13 @@ const initialState = {
 
 const user = createReducer(initialState, (builder) => {
     builder
-		
-        .addCase(loginAuthSuccess, (state, action) => ({
+        // @ts-ignore
+        .addCase(loginAuthSuccess, (state, action: Action) => ({
             ...state,
             isLogIn: true,
             isLoading: false,
-            ...action.payload?.userData,
-            token: action.payload?.token,
+            ...action.payload.userData,
+            token: action.payload.token,
         }))
         .addCase(logOutAuthSuccess, () => ({
             ...initialState
