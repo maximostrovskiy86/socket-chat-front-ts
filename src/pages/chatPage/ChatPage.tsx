@@ -104,7 +104,7 @@ function ChatPage() {
 
     return (
         <div className={style.chat}>
-            <h3 style={{textAlign: "center"}}>
+            <h3 style={{textAlign: "center", margin: "10px 0"}}>
                 {`Welcome ${userName}`}
             </h3>
             <Row className={style.rowBox}>
