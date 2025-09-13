@@ -2,7 +2,7 @@ import React, {useRef, useEffect, useMemo} from 'react';
 import {Form, Button} from 'react-bootstrap';
 import style from "./ChatForm.module.scss";
 import moment from "moment";
-import { Message } from "../../pages/chatPage/ChatPage.types.ts";
+import { Message } from "../../pages/chatPage/ChatPage.types";
 
 type Props = {
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
