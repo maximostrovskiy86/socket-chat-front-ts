@@ -1,10 +1,10 @@
 import { IsState } from "./Auth.types";
 
 const loginSocket = (state: IsState) => {
-    return state.auth;
-}
+  return state.auth;
+};
 const isAuth = (state: IsState) => {
-    return state.auth.user.token
+  return state.auth.user.token;
 };
 const userName = (state: IsState) => state.auth.user.username;
 const createDate = (state: IsState) => state.auth.user.createdAt;
@@ -13,13 +13,13 @@ const isAdmin = (state: IsState) => state.auth.user.isAdmin;
 const isMuted = (state: IsState) => state.auth.user.isMuted;
 
 const selectors = {
-    loginSocket,
-    isAuth,
-    userName,
-    createDate,
-    isLoggedIn,
-    isAdmin,
-    isMuted,
+  loginSocket,
+  isAuth,
+  userName,
+  createDate,
+  isLoggedIn,
+  isAdmin,
+  isMuted,
 };
 
 export default selectors;

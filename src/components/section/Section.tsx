@@ -4,7 +4,7 @@ import style from "./Section.module.scss";
 type Props = {
   children: React.ReactElement;
   title: string;
-}
+};
 
 const Section = function ({ children, title = "" }: Props) {
   return (

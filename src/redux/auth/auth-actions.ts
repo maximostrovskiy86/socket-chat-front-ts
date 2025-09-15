@@ -8,5 +8,4 @@ export const logOutAuthRequest = createAction("auth/logOutAuthRequest");
 export const logOutAuthSuccess = createAction("auth/logOutAuthSuccess");
 export const logOutAuthError = createAction("auth/logOutAuthError");
 
-
 export const updateUserSuccess = createAction("update/updateUserSuccess");

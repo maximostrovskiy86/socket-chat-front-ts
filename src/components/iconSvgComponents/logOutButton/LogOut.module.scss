@@ -1,11 +1,9 @@
 @use "../../../styles/utils/variables" as v;
-@use 'sass:color';
+@use "sass:color";
 
 .logOutButton {
-    transition: fill 250ms v.$timing-function;
-    //@debug color.adjust(v.$main-txt-color, $lightness: 20%);
-    &:hover {
-        //fill: saturate(v.$user-color, 30%);
-        fill:  color.adjust(v.$main-txt-color, $lightness: 20%);
-    }
+  transition: fill 250ms v.$timing-function;
+  &:hover {
+    fill: color.adjust(v.$main-txt-color, $lightness: 20%);
+  }
 }

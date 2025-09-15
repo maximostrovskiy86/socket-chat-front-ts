@@ -24,7 +24,7 @@
 
 .user:nth-child(even) {
   //background-color: lighten(var.$user-color, 20%);
-  background-color: #B3D8EAFF;
+  background-color: #b3d8eaff;
 }
 
 .admin {
@@ -42,18 +42,18 @@
 }
 
 .status {
-    display: inline-flex;
-    align-items: center;
-    margin-left: 5px;
-    font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 5px;
+  font-weight: 700;
 }
 
 .online {
-    composes: status;
-    color: #0cc26d;
+  composes: status;
+  color: #0cc26d;
 }
 
 .offline {
-    composes: status;
-    color: #d50a0a;
+  composes: status;
+  color: #d50a0a;
 }

@@ -1,65 +1,66 @@
 @use "../../styles/utils/variables" as v;
 @use "../../styles/utils/mixin" as mix;
-@use 'sass:color';
+@use "sass:color";
 
 .main {
-    display: flex;
-    flex-direction: column;
-    min-height: 100%;
-    @include mix.layout-components(v.$main-color, 15%)
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  @include mix.layout-components(v.$main-color, 15%);
 }
 
 .formMessage {
-    display: flex;
-    align-items: end;
-    flex-basis: 100%;
-    padding: 10px;
-    margin-top: auto;
+  display: flex;
+  align-items: end;
+  flex-basis: 100%;
+  padding: 10px;
+  margin-top: auto;
 }
 
 .listMessage {
-    height: 50vh;
-    //overflow-y: auto;
-    overflow-y: scroll;
-    scroll-behavior: smooth;
+  height: 50vh;
+  //overflow-y: auto;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
 }
 
 .messageBox {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .message {
-    display: flex;
-    align-items: center;
-    padding: 0 5px;
-    width: 250px;
-    height: 30px;
-    border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+  width: 250px;
+  height: 30px;
+  border-radius: 10px;
 }
 
-.name, .time {
-    font-size: 12px;
+.name,
+.time {
+  font-size: 12px;
 }
 
 .messageBox + .messageBox {
-    margin-top: 8px;
+  margin-top: 8px;
 }
 
 .message:nth-child(odd) {
-    background-color: color.scale(v.$main-color, $lightness: 90%)
+  background-color: color.scale(v.$main-color, $lightness: 90%);
 }
 
 .message:nth-child(even) {
-    background-color: color.scale(v.$main-color, $lightness: 20%)
+  background-color: color.scale(v.$main-color, $lightness: 20%);
 }
 
 .inputMessage {
-    flex-basis: inherit;
-    margin-right: 20px;
+  flex-basis: inherit;
+  margin-right: 20px;
 }
 
 .buttonMessage {
-    align-self: end;
-    width: 150px;
+  align-self: end;
+  width: 150px;
 }
