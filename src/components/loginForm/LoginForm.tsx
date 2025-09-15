@@ -5,8 +5,8 @@ import authOperations from "../../redux/auth/auth-operations";
 import style from "./LoginForm.module.scss";
 
 function LoginForm() {
-  const [username, setUserName] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [username, setUserName] = useState<string>("Max");
+  const [password, setPassword] = useState<string>("2wsx@WSX");
   const dispatch = useAppDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
