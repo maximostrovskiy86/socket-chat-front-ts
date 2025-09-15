@@ -24,8 +24,8 @@ function ChatPage() {
 
   useEffect(() => {
     setSocket(
-      // io("https://socket-chat-back.onrender.com", {
-        io("http://localhost:4000", {
+      io("https://socket-chat-back.onrender.com", {
+        // io("http://localhost:4000", {
         reconnectionDelayMax: 10000,
         auth: {
           token,
@@ -34,7 +34,6 @@ function ChatPage() {
     );
 
     return () => {
-      // console.log("DISCONECT-1")
       socket?.disconnect();
       setSocket(null);
     };

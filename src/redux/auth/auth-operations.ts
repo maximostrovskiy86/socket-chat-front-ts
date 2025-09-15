@@ -9,8 +9,8 @@ import {
 } from "./auth-actions";
 import { User } from "./Auth.types";
 
-const BASE_URL = "http://localhost:4000";
-// const BASE_URL = "https://socket-chat-back.onrender.com";
+// const BASE_URL = "http://localhost:4000";
+const BASE_URL = "https://socket-chat-back.onrender.com";
 
 const tok = {
   set(token: string) {
@@ -37,9 +37,11 @@ const authLogin =
       const { data } = await axios.post(`${BASE_URL}/auth/login`, user);
       tok.set(data.token);
       dispatch(loginAuthSuccess(data));
+      return data;
     } catch (error) {
       // @ts-ignore
       dispatch(loginAuthError(error));
+      return error;
     }
   };
 

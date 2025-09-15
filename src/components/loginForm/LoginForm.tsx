@@ -3,10 +3,11 @@ import { useAppDispatch } from "../../hooks/Hooks";
 import { Button } from "react-bootstrap";
 import authOperations from "../../redux/auth/auth-operations";
 import style from "./LoginForm.module.scss";
+import { toast } from "react-toastify";
 
 function LoginForm() {
-  const [username, setUserName] = useState<string>("Max");
-  const [password, setPassword] = useState<string>("2wsx@WSX");
+  const [username, setUserName] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const dispatch = useAppDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -21,14 +22,27 @@ function LoginForm() {
     }
   };
 
+  const notifyIncorrectUser = (err: never) =>
+    toast.error(`Incorrect password or ${err}`);
+
   const resetForm = (): void => {
     setUserName("");
     setPassword("");
   };
 
-  const handleSubmit = (event: FormEvent): void => {
+  const handleSubmit = async (event: FormEvent): Promise<void> => {
     event.preventDefault();
-    dispatch(authOperations.authLogin({ username, password }));
+
+    const { response } = await dispatch(
+      authOperations.authLogin({ username, password }),
+    );
+    console.log("response: ", response);
+    if (response.status === 403) {
+      // @ts-ignore
+      notifyIncorrectUser(response.data.status[0].message);
+      return;
+    }
+
     resetForm();
   };
 
