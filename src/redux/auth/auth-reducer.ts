@@ -1,6 +1,10 @@
 import { combineReducers } from "redux";
 import { createReducer } from "@reduxjs/toolkit";
-import { loginAuthSuccess, logOutAuthSuccess } from "./auth-actions";
+import {
+  loginAuthRequest,
+  loginAuthSuccess,
+  logOutAuthSuccess,
+} from "./auth-actions";
 
 import { Action } from "./Auth.types";
 
@@ -14,6 +18,10 @@ const initialState = {
 
 const user = createReducer(initialState, (builder) => {
   builder
+    // @ts-ignore
+    .addCase(loginAuthRequest, () => ({
+      isLoading: true,
+    }))
     // @ts-ignore
     .addCase(loginAuthSuccess, (state, action: Action) => ({
       ...state,

@@ -32,7 +32,6 @@ const authLogin =
         | "auth/loginAuthError";
     }) => void,
   ) => {
-    console.log("dispatch, ", dispatch);
     dispatch(loginAuthRequest());
     try {
       const { data } = await axios.post(`${BASE_URL}/auth/login`, user);

@@ -6,12 +6,19 @@ import ChatPage from "../../pages/chatPage/ChatPage";
 import authSelector from "../../redux/auth/auth-selectors";
 import { useSelector } from "react-redux";
 
-function App() {
+const App = () => {
   const isAuth = useSelector(authSelector.isAuth);
+  const isLoading = useSelector(authSelector.isLoading);
 
   return (
     <Container className={style.container}>
-      {isAuth ? <ChatPage /> : <LoginPage />}
+      {isLoading ? (
+        <h2 className={style.loading}>Loading ...</h2>
+      ) : isAuth ? (
+        <ChatPage />
+      ) : (
+        <LoginPage />
+      )}
     </Container>
   );
 }

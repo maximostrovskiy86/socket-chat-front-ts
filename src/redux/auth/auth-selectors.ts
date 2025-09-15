@@ -11,6 +11,7 @@ const createDate = (state: IsState) => state.auth.user.createdAt;
 const isLoggedIn = (state: IsState) => state.auth.user.isLogIn;
 const isAdmin = (state: IsState) => state.auth.user.isAdmin;
 const isMuted = (state: IsState) => state.auth.user.isMuted;
+const isLoading = (state: IsState)=> state.auth.user.isLoading;
 
 const selectors = {
   loginSocket,
@@ -20,6 +21,7 @@ const selectors = {
   isLoggedIn,
   isAdmin,
   isMuted,
+  isLoading,
 };
 
 export default selectors;

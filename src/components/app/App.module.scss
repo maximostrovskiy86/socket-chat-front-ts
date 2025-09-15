@@ -2,3 +2,11 @@
   display: flex;
   height: 100vh;
 }
+
+.loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: #00D7FF;
+    transform: translate(-50%, -50%);
+}
