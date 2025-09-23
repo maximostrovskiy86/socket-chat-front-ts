@@ -50,7 +50,7 @@ const ChatForm = ({ onSubmit, onChange, msg, messages, isMuted }: Props) => {
             placeholder="Type message..."
             value={msg}
             onChange={onChange}
-            pattern="[0-9a-zA-Z!@#$%^&*~'`]{1,200}"
+            // pattern="[0-9a-zA-Z!@#$%^&*~'`]{1,200}"
           />
         </Form.Group>
         <Button
