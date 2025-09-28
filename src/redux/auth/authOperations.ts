@@ -2,8 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { User } from "./Auth.types"
 
-// axios.defaults.baseURL = "https://socket-chat-back.onrender.com";
-axios.defaults.baseURL = "http://localhost:4000";
+axios.defaults.baseURL = "https://socket-chat-back.onrender.com";
+// axios.defaults.baseURL = "http://localhost:4000";
 
 
 const token = {

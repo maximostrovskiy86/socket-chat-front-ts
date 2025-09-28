@@ -10,7 +10,7 @@ export interface IsState {
       isAdmin: boolean;
       createdAt: string;
       updatedAt: string;
-    } | null;
+    };
     isLoggedIn: boolean;
     token: string | null;
     isLoading: boolean;
