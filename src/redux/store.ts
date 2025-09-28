@@ -1,17 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { persistReducer, persistStore } from "redux-persist";
-import storage from "redux-persist/lib/storage";
-import authReducer from "./auth/auth-reducer";
+import { persistStore } from "redux-persist";
+import {authReducer} from "./auth/authSlice";
 
-const authPersistConfig = {
-  key: "auth",
-  storage,
-  whitelist: ["token", "user"],
-};
-
-const store = configureStore({
+export const store = configureStore({
   reducer: {
-    auth: persistReducer(authPersistConfig, authReducer),
+    auth: authReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -20,15 +13,7 @@ const store = configureStore({
   // devTools: process.env.NODE_ENV === "development",
 });
 
-
-const persistor = persistStore(store);
-
-const state = {
-  store,
-  persistor,
-};
-
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
-export default state;
+export const persistor = persistStore(store);

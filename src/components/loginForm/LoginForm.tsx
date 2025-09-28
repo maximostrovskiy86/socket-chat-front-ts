@@ -1,13 +1,13 @@
 import React, { useState, FormEvent } from "react";
 import { useAppDispatch } from "../../hooks/Hooks";
 import { Button } from "react-bootstrap";
-import authOperations from "../../redux/auth/auth-operations";
+import authOperations from "../../redux/auth/authOperations";
 import style from "./LoginForm.module.scss";
 import { toast } from "react-toastify";
 
 function LoginForm() {
-  const [username, setUserName] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [username, setUserName] = useState<string>("Max");
+  const [password, setPassword] = useState<string>("2wsx@WSX");
   const dispatch = useAppDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -22,8 +22,8 @@ function LoginForm() {
     }
   };
 
-  const notifyIncorrectUser = (err: never) =>
-    toast.error(`Incorrect password or ${err}`);
+  // const notifyIncorrectUser = (err: never) =>
+  //   toast.error(`Incorrect password or ${err}`);
 
   const resetForm = (): void => {
     setUserName("");
@@ -33,15 +33,17 @@ function LoginForm() {
   const handleSubmit = async (event: FormEvent): Promise<void> => {
     event.preventDefault();
 
-    const { response } = await dispatch(
-      authOperations.authLogin({ username, password }),
+    const response  = await dispatch(
+      authOperations.login({ username, password }),
     );
+
     console.log("response: ", response);
-    if (response.status === 403) {
-      // @ts-ignore
-      notifyIncorrectUser(response.data.status[0].message);
-      return;
-    }
+
+    // if (response.status === 403) {
+    //   // @ts-ignore
+    //   notifyIncorrectUser(response.data.status[0].message);
+    //   return;
+    // }
 
     resetForm();
   };
@@ -58,7 +60,7 @@ function LoginForm() {
           // pattern="[a-zA-Z]"
           // title="The name can consist of numbers, Latin letters and special characters @ $ &"
           required
-          placeholder="Login *"
+          placeholder="Login or email"
           className={style.field}
         />
       </label>

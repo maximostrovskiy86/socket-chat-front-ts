@@ -1,20 +1,16 @@
 import { IsState } from "./Auth.types";
-
-const loginSocket = (state: IsState) => {
-  return state.auth;
-};
 const isAuth = (state: IsState) => {
-  return state.auth.user.token;
+  // console.log("state", state);
+  return state.auth.token;
 };
 const userName = (state: IsState) => state.auth.user.username;
 const createDate = (state: IsState) => state.auth.user.createdAt;
-const isLoggedIn = (state: IsState) => state.auth.user.isLogIn;
+const isLoggedIn = (state: IsState) => state.auth.isLoggedIn;
 const isAdmin = (state: IsState) => state.auth.user.isAdmin;
 const isMuted = (state: IsState) => state.auth.user.isMuted;
-const isLoading = (state: IsState)=> state.auth.user.isLoading;
+const isLoading = (state: IsState)=> state.auth.isLoading;
 
 const selectors = {
-  loginSocket,
   isAuth,
   userName,
   createDate,
