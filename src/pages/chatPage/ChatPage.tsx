@@ -6,8 +6,8 @@ import ChatForm from "../../components/chatForm/ChatForm";
 import Sidebar from "../../components/sideBar/SideBar";
 import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
-import authSelectors from "../../redux/auth/auth-selectors";
-import authOperations from "../../redux/auth/auth-operations";
+import authSelectors from "../../redux/auth/authSelectors";
+import authOperations from "../../redux/auth/authOperations";
 import { Message, UserType, UserOnline, SocketType } from "./ChatPage.types";
 
 function ChatPage() {
@@ -63,7 +63,7 @@ function ChatPage() {
 
       socket.on("disconnect", () => {
         // console.log("user disconnected");
-        dispatch(authOperations.authLogout());
+        dispatch(authOperations.logOut());
       });
     }
 

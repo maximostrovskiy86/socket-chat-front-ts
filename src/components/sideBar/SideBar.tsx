@@ -2,8 +2,8 @@ import { Button } from "react-bootstrap";
 import style from "./SideBar.module.scss";
 import LogOut from "../iconSvgComponents/logOutButton/LogOut";
 import { useAppSelector, useAppDispatch } from "../../hooks/Hooks";
-import authOperations from "../../redux/auth/auth-operations";
-import authSelectors from "../../redux/auth/auth-selectors";
+import authOperations from "../../redux/auth/authOperations";
+import authSelectors from "../../redux/auth/authSelectors";
 import UserIsAdmin from "../user/UserIsAdmin";
 import User from "../user/User";
 import {
@@ -24,7 +24,7 @@ const SideBar = ({ allUsers, usersOnline, socket }: Props) => {
 
   const logOut = () => {
     socket?.disconnect();
-    dispatch(authOperations.authLogout());
+    dispatch(authOperations.logOut());
   };
 
   const onBannedUser = (id: string, isBanned: boolean) => {
