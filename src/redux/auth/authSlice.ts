@@ -75,13 +75,7 @@ const authSlice = createSlice({
 
       // logOut reducer
       .addCase(authOperations.logOut.pending, handlePending)
-      .addCase(authOperations.logOut.fulfilled, (state) => {
-        state.user = null;
-        state.token = null;
-        state.isLoggedIn = false;
-        state.isLoading = false;
-        state.error = null;
-      })
+      .addCase(authOperations.logOut.fulfilled, () => initialState)
       .addCase(authOperations.logOut.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
