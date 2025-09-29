@@ -1,11 +1,11 @@
-import Container from "../../components/container/Container";
+import style from "./RegisterPage.module.scss";
 import RegistrationForm from "../../components/registerForm/RegistrationForm";
 
 const RegisterPage = () => {
   return (
-      <Container>
-        <RegistrationForm />
-      </Container>
+    <div className={style.formWrapper}>
+      <RegistrationForm />
+    </div>
   );
 };
 

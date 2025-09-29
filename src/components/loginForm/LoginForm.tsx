@@ -3,7 +3,8 @@ import { useAppDispatch } from "../../hooks/Hooks";
 import { Button } from "react-bootstrap";
 import authOperations from "../../redux/auth/authOperations";
 import style from "./LoginForm.module.scss";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 function LoginForm() {
   const [username, setUserName] = useState<string>("Max");
@@ -33,7 +34,7 @@ function LoginForm() {
   const handleSubmit = async (event: FormEvent): Promise<void> => {
     event.preventDefault();
 
-    const response  = await dispatch(
+    const response = await dispatch(
       authOperations.login({ username, password }),
     );
 
@@ -50,6 +51,7 @@ function LoginForm() {
 
   return (
     <form className={style.form} onSubmit={handleSubmit} autoComplete="off">
+      <h2 className={style.h2}>Login</h2>
       <label className={style.formLabel} htmlFor="username">
         <input
           id="username"
@@ -79,7 +81,13 @@ function LoginForm() {
           className={style.field}
         />
       </label>
-
+      <p>Do not have an account? </p>
+      <p>
+        You can
+        <strong>
+          <Link to="/registration"> Sign Up</Link>
+        </strong>
+      </p>
       <div className={style.buttonBlock}>
         <Button className={style.button} type="submit">
           LOG IN
