@@ -5,11 +5,12 @@ import style from "./RegistrationForm.module.scss";
 import { Button } from "react-bootstrap";
 import authOperations from "../../redux/auth/authOperations";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const RegistrationForm = () => {
-  const [username, setUsername] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [username, setUsername] = useState<string>("Mia");
+  const [email, setEmail] = useState<string>("slon.2786@gmail.com\n");
+  const [password, setPassword] = useState<string>("2wsx@WSX");
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -72,41 +73,56 @@ const RegistrationForm = () => {
 
   return (
     <form className={style.form} onSubmit={handleSubmit} autoComplete="off">
-      <input
-        id="name"
-        type="text"
-        name="username"
-        value={username}
-        title="The name can only consist of Latin letters, apostrophes, dashes and spaces. For example, Adrian, Jacob Mercer, Castelmore d'Artagnan, etc."
-        onChange={onHandleChange}
-      />
-      <label htmlFor="name">Name</label>
-
-      <input
-        id="login"
-        type="email"
-        name="email"
-        required
-        value={email}
-        pattern="^(http(s){0,1}:\/\/.){0,1}[\-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([\-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$"
-        title="Email must contain the @ symbol and be in the format example@mail.com"
-        onChange={onHandleChange}
-      />
-      <label htmlFor="login">Login</label>
-
-      <input
-        id="password"
-        type="password"
-        name="password"
-        required
-        value={password}
-        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-        title="The password must be at least 7 characters long and may contain numbers, Latin letters and special characters ! @ # $ % ^ & *"
-        onChange={onHandleChange}
-      />
-      <label htmlFor="password">Password</label>
-
-      <Button>Registration</Button>
+      <h2 className={style.h2}>Registration</h2>
+      <label className={style.formLabel} htmlFor="name">
+        <input
+          id="name"
+          type="text"
+          name="username"
+          value={username}
+          title="The name can only consist of Latin letters, apostrophes, dashes and spaces. For example, Adrian, Jacob Mercer, Castelmore d'Artagnan, etc."
+          onChange={onHandleChange}
+          className={style.field}
+          placeholder="Name"
+        />
+      </label>
+      <label className={style.formLabel} htmlFor="login">
+        <input
+          id="login"
+          type="email"
+          name="email"
+          required
+          value={email}
+          pattern="^(http(s){0,1}:\/\/.){0,1}[\-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([\-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$"
+          title="Email must contain the @ symbol and be in the format example@mail.com"
+          onChange={onHandleChange}
+          className={style.field}
+          placeholder="Login or email"
+        />
+      </label>
+      <label className={style.formLabel} htmlFor="password">
+        <input
+          id="password"
+          type="password"
+          name="password"
+          required
+          value={password}
+          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+          title="The password must be at least 7 characters long and may contain numbers, Latin letters and special characters ! @ # $ % ^ & *"
+          onChange={onHandleChange}
+          className={style.field}
+          placeholder="Password *"
+        />
+      </label>
+      <p>
+        You have an account! You can{" "}
+        <strong>
+          <Link to="/login">Sign In</Link>
+        </strong>
+      </p>
+      <div className={style.buttonBlock}>
+        <Button className={style.button} type="submit">REGISTER</Button>
+      </div>
     </form>
   );
 };
