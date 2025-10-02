@@ -112,7 +112,7 @@ const RegistrationForm = () => {
           title="Email must contain the @ symbol and be in the format example@mail.com"
           onChange={onHandleChange}
           className={style.field}
-          placeholder="Login or email"
+          placeholder="Email"
         />
       </label>
       <label className={style.formLabel} htmlFor="password">

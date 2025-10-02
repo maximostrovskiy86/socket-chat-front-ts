@@ -30,7 +30,6 @@ const login = createAsyncThunk("auth/login", async (user: User, thunkAPI) => {
   try {
     const response = await axios.post("/auth/login", user);
     token.set(response.data.accessToken);
-    console.log("LOGIN", response);
     return response;
   } catch (err) {
     console.log("ERR", err);

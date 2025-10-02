@@ -30,7 +30,6 @@ const initialState = {
 } satisfies IsState["auth"] as IsState["auth"];
 
 const handlePending = (state: IsState["auth"]): void => {
-  console.log("handlePending", state.isLoading);
   state.isLoading = true;
 };
 
