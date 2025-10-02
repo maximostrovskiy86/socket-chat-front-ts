@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 import Container from "../container/Container";
 import LoginPage from "../../pages/loginPage/LoginPage";
 import ChatPage from "../../pages/chatPage/ChatPage";
-import NotFoundPage from "../../pages/notFound";
+import NotFoundPage from "../../pages/notFound/NotFoundPage";
 import RegisterPage from "../../pages/registerPage/RegisterPage";
 import PrivateRoute from "../routes/PrivateRoute";
 import PublicRoute from "../routes/PublicRoute";
