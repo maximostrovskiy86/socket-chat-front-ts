@@ -8,9 +8,9 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
 const RegistrationForm = () => {
-  const [username, setUsername] = useState<string>("Mia");
-  const [email, setEmail] = useState<string>("slon.2786@gmail.com\n");
-  const [password, setPassword] = useState<string>("2wsx@WSX");
+  const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -32,37 +32,51 @@ const RegistrationForm = () => {
     }
   };
 
-  // const notifySuccessCreated = (email, name) =>
-  //   toast.success(`User ${email} and name ${name} created!`);
-  // const notifyExistsUser = (email) =>
-  //   toast.error(`User ${email} already exists!`);
+  const notifySuccessCreated = (email: string, name: string) =>
+    toast.success(`User with email ${email} and name ${name} created!`);
+  const notifyExistsUser = (email: string) =>
+    toast.error(`Registration failed ${email}`);
+  const unValidation = () => {
+    toast.error(
+      `The name must contain more than two and no more than 20 characters`,
+    );
+  };
+
+  const isValid = (el: string) => {
+    if (el.length <= 2 || el.length > 20) {
+      unValidation();
+      return;
+    }
+  };
 
   const handleSubmit = async (event: FormEvent): Promise<void> => {
     event.preventDefault();
 
-    const response = await dispatch(
-      authOperations.register({
-        email,
-        username,
-        password,
-      }),
-    );
+    await isValid(username);
 
-    console.log("response", response);
+    try {
+      const response = await dispatch(
+        authOperations.register({
+          email,
+          username,
+          password,
+        }),
+      ).unwrap();
 
-    resetForm();
+      resetForm();
 
-    //   if (response.payload.status === 201) {
-    //     notifySuccessCreated(
-    //       response.payload.data.email,
-    //       response.payload.data.username,
-    //     );
-    //     navigate("/login");
-    //
-    //     return;
-    //   }
-    //
-    //   notifyExistsUser(response.meta.arg.email);
+      if (response.status === 201) {
+        notifySuccessCreated(
+          response.data.userData.email,
+          response.data.userData.username,
+        );
+        navigate("/login");
+        return;
+      }
+    } catch (err) {
+      console.error("Registration failed", err);
+      notifyExistsUser(email);
+    }
   };
 
   const resetForm = () => {
@@ -80,6 +94,7 @@ const RegistrationForm = () => {
           type="text"
           name="username"
           value={username}
+          required
           title="The name can only consist of Latin letters, apostrophes, dashes and spaces. For example, Adrian, Jacob Mercer, Castelmore d'Artagnan, etc."
           onChange={onHandleChange}
           className={style.field}
@@ -121,7 +136,9 @@ const RegistrationForm = () => {
         </strong>
       </p>
       <div className={style.buttonBlock}>
-        <Button className={style.button} type="submit">REGISTER</Button>
+        <Button className={style.button} type="submit">
+          REGISTER
+        </Button>
       </div>
     </form>
   );

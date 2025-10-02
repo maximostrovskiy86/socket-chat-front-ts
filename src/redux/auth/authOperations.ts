@@ -1,10 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import { User } from "./Auth.types"
+import axios, { AxiosResponse } from "axios";
+import { User, RegisterResponse } from "./Auth.types";
 
-// axios.defaults.baseURL = "https://socket-chat-back.onrender.com";
-axios.defaults.baseURL = "http://localhost:4000";
-
+axios.defaults.baseURL = "https://socket-chat-back.onrender.com";
+// axios.defaults.baseURL = "http://localhost:4000";
 
 const token = {
   set(token: string) {
@@ -15,25 +14,26 @@ const token = {
   },
 };
 
-const register = createAsyncThunk(
+const register = createAsyncThunk<AxiosResponse<RegisterResponse>, User>(
   "auth/registration",
   async (user: User, thunkAPI) => {
     try {
-      console.log("register");
-      return await axios.post("/auth/registration", user);
+      return await axios.post<RegisterResponse>("/auth/registration", user);
     } catch (err: unknown) {
-      return thunkAPI.rejectWithValue(err);
+      return thunkAPI.rejectWithValue(err as unknown);
     }
   },
 );
 
 const login = createAsyncThunk("auth/login", async (user: User, thunkAPI) => {
+  console.log("user", user);
   try {
     const response = await axios.post("/auth/login", user);
     token.set(response.data.accessToken);
-
+    console.log("LOGIN", response);
     return response;
   } catch (err) {
+    console.log("ERR", err);
     return thunkAPI.rejectWithValue(err);
   }
 });
@@ -44,7 +44,7 @@ const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
     token.unset();
     // return response;
   } catch (err) {
-    return thunkAPI.rejectWithValue(err) ;
+    return thunkAPI.rejectWithValue(err);
   }
 });
 
@@ -70,7 +70,6 @@ const authOperations = {
   login,
   logOut,
   token,
-  // authCurrentUserRefresh
 };
 
 export default authOperations;

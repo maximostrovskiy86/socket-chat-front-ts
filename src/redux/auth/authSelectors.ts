@@ -8,7 +8,7 @@ const createDate = (state: IsState) => state.auth.user.createdAt;
 const isLoggedIn = (state: IsState) => state.auth.isLoggedIn;
 const isAdmin = (state: IsState) => state.auth.user.isAdmin;
 const isMuted = (state: IsState) => state.auth.user.isMuted;
-const isLoading = (state: IsState)=> state.auth.isLoading;
+const isLoading = (state: IsState) => state.auth.isLoading;
 
 const selectors = {
   isAuth,

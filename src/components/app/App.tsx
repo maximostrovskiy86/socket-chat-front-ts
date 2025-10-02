@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 import Container from "../container/Container";
 import LoginPage from "../../pages/loginPage/LoginPage";
 import ChatPage from "../../pages/chatPage/ChatPage";
-import NotFoundPage from "../../pages/notFound";
+import NotFoundPage from "../../pages/notFound/NotFoundPage";
 import RegisterPage from "../../pages/registerPage/RegisterPage";
 import PrivateRoute from "../routes/PrivateRoute";
 import PublicRoute from "../routes/PublicRoute";
@@ -13,52 +13,43 @@ import authSelector from "../../redux/auth/authSelectors";
 import { useSelector } from "react-redux";
 
 const App = () => {
-  // const isAuth = useSelector(authSelector.isAuth);
-  // const isLoggedIn = useSelector(authSelector.isLoggedIn);
-  // const isLoading = useSelector(authSelector.isLoading);
+  const isLoading = useSelector(authSelector.isLoading);
 
   return (
     <>
-      {/*<Container className={style.container}>*/}
-      {/*  {isLoading ? (*/}
-      {/*    <h2 className={style.loading}>Loading ...</h2>*/}
-      {/*  ) : isAuth ? (*/}
-      {/*    <ChatPage />*/}
-      {/*  ) : (*/}
-      {/*    <LoginPage />*/}
-      {/*  )}*/}
-      {/*</Container>*/}
-      <Container className={style.container}>
-        <Routes>
-          <Route path="/"
-            element={
-              <PrivateRoute redirectTo="/login" component={<ChatPage />} />
-            }
-          />
-          <Route path="/registration"
-            element={
-              <PublicRoute
-                redirectTo="/chat"
-                component={<RegisterPage />}
-              />
-            }
-          />
-          <Route path="/login"
-            element={
-              <PublicRoute
-                redirectTo="/chat"
-                component={<LoginPage />}
-              />
-            }
-          />
-          <Route path="/chat"
-            element={
-              <PrivateRoute redirectTo="/login" component={<ChatPage />} />
-            }
-          />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </Container>
+      {isLoading ? (
+        <h2 className={style.loading}>Loading ...</h2>
+      ) : (
+        <Container className={style.container}>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <PrivateRoute redirectTo="/login" component={<ChatPage />} />
+              }
+            />
+            <Route
+              path="/registration"
+              element={
+                <PublicRoute redirectTo="/chat" component={<RegisterPage />} />
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <PublicRoute redirectTo="/chat" component={<LoginPage />} />
+              }
+            />
+            <Route
+              path="/chat"
+              element={
+                <PrivateRoute redirectTo="/login" component={<ChatPage />} />
+              }
+            />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </Container>
+      )}
       <ToastContainer />
     </>
   );

@@ -24,8 +24,8 @@ function ChatPage() {
 
   useEffect(() => {
     setSocket(
-      // io("https://socket-chat-back.onrender.com", {
-        io("http://localhost:4000", {
+      io("https://socket-chat-back.onrender.com", {
+        //   io("http://localhost:4000", {
         reconnectionDelayMax: 10000,
         auth: {
           token,
@@ -103,7 +103,7 @@ function ChatPage() {
         {`Welcome ${userName}`}
       </h3>
       <Row className={style.rowBox}>
-        <Col sm={8}>
+        <Col lg={8}>
           <Section title="">
             <ChatForm
               onChange={handleChange}
@@ -114,7 +114,7 @@ function ChatPage() {
             />
           </Section>
         </Col>
-        <Col sm={4}>
+        <Col lg={4}>
           <Section title="">
             <Sidebar
               allUsers={allUsers}
