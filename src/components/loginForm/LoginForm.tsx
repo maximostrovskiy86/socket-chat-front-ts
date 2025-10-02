@@ -3,66 +3,70 @@ import { useAppDispatch } from "../../hooks/Hooks";
 import { Button } from "react-bootstrap";
 import authOperations from "../../redux/auth/authOperations";
 import style from "./LoginForm.module.scss";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import axios, { AxiosError } from "axios";
+import type { ErrorResponse } from "../../redux/auth/Auth.types";
 
 function LoginForm() {
-  const [username, setUserName] = useState<string>("Max");
-  const [password, setPassword] = useState<string>("2wsx@WSX");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const dispatch = useAppDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
 
     switch (name) {
-      case "username":
-        return setUserName(value);
+      case "email":
+        return setEmail(value);
       case "password":
         return setPassword(value);
       default:
     }
   };
 
-  // const notifyIncorrectUser = (err: never) =>
-  //   toast.error(`Incorrect password or ${err}`);
+  const notifyIncorrectUser = (err: unknown) => toast.error(`${err}`);
 
   const resetForm = (): void => {
-    setUserName("");
+    setEmail("");
     setPassword("");
   };
 
   const handleSubmit = async (event: FormEvent): Promise<void> => {
     event.preventDefault();
 
-    const response = await dispatch(
-      authOperations.login({ username, password }),
-    );
-
-    console.log("response: ", response);
-
-    // if (response.status === 403) {
-    //   // @ts-ignore
-    //   notifyIncorrectUser(response.data.status[0].message);
-    //   return;
-    // }
-
-    resetForm();
+    try {
+      await dispatch(authOperations.login({ email, password })).unwrap();
+      resetForm();
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        const status = err.response?.status;
+        if (status === 404 || status === 401) {
+          const msg =
+            (err as AxiosError<ErrorResponse>).response?.data?.data?.message ??
+            "Incorrect credentials";
+          notifyIncorrectUser(msg);
+          return;
+        }
+      }
+      notifyIncorrectUser("unknown error");
+    }
   };
 
   return (
     <form className={style.form} onSubmit={handleSubmit} autoComplete="off">
       <h2 className={style.h2}>Login</h2>
-      <label className={style.formLabel} htmlFor="username">
+      <label className={style.formLabel} htmlFor="email">
         <input
-          id="username"
-          type="username"
-          name="username"
-          value={username}
+          id="email"
+          type="email"
+          name="email"
+          value={email}
           onChange={handleChange}
           // pattern="[a-zA-Z]"
-          // title="The name can consist of numbers, Latin letters and special characters @ $ &"
-          required
-          placeholder="Login or email"
+          title="The name can consist of numbers, Latin letters and special characters @ $ &"
+          // required
+          placeholder="Email"
           className={style.field}
         />
       </label>

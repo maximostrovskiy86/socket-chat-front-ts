@@ -7,6 +7,6 @@ import { Navigate } from "react-router-dom";
 // @ts-expect-error
 const PrivateRoute = ({ component: Component, redirectTo = "/" }) => {
   const isLoggedIn = useSelector(authSelectors.isLoggedIn);
-  return isLoggedIn ? Component : <Navigate to={redirectTo} />
+  return isLoggedIn ? Component : <Navigate to={redirectTo} />;
 };
 export default PrivateRoute;

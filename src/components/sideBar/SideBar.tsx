@@ -36,12 +36,13 @@ const SideBar = ({ allUsers, usersOnline, socket }: Props) => {
   const onMutedUser = (id: string, isMuted: boolean) => {
     socket?.emit("ON_MUTE", { id, isMuted });
   };
-
+  console.log("usersOnline", usersOnline);
   return (
     <div className={style.sideBar}>
       <Button className={style.logOut} variant="warning" onClick={logOut}>
         <LogOut />
       </Button>
+      <h5>{isAdmin ? "All users for Admin" : "Users online"}</h5>
       {isAdmin ? (
         <ul className={style.listUsers}>
           {allUsers &&

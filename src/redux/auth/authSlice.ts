@@ -14,6 +14,7 @@ const initialState = {
   user: {
     _id: "",
     username: "",
+    email: "",
     password: "",
     isOnline: false,
     isBanned: false,
@@ -48,8 +49,8 @@ const authSlice = createSlice({
       .addCase(authOperations.register.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(authOperations.register.fulfilled, (state) => {
-        // state.user = action.payload.data.user;
+      .addCase(authOperations.register.fulfilled, (state, action) => {
+        // state.user = action.payload.data.userData;
         state.isLoggedIn = false;
         state.isLoading = false;
         state.error = null;
